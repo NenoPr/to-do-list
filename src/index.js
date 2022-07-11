@@ -33,7 +33,7 @@ function createToDoItem(getTitle, getDescription, getDueDate, getPriority, getNo
     toDoChild.notes = getNotes
     toDoChild.checklist = getChecklist
 
-    defaultProject.allItems.push(toDoChild)
+    project.allItems.push(toDoChild)
 
     // Can create its own functions here too like this
     // toDoItem.summary = function() {
@@ -53,6 +53,8 @@ createToDoItem("Title of item","description of item","date","high priority","not
 createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
 createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
 createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
+
+console.log("user proto",Object.getPrototypeOf(user))
 
 // console.log(Object.getPrototypeOf(user))
 // Object.setPrototypeOf(user, toDoParent);
@@ -77,15 +79,10 @@ console.log("toDoParent's projects:",toDoParent.allProjects)
 
 // })
 
+let currentProject;
+
 startupRenderProjectTasks()
 
-let projectDefault = document.createElement("div")
-projectDefault.innerText = defaultProject.name
-projectDefault.classList.add("project")
-projectDefault.addEventListener("click", () => {
-    updateRenderProjectTasks(projectDefault)
-})
-document.getElementById("projects-list").appendChild(projectDefault)
 
 function startupRenderProjectTasks() {
     if (document.getElementById("tasks-list").firstChild == undefined) {
@@ -100,9 +97,22 @@ function startupRenderProjectTasks() {
             document.getElementById("tasks-list").appendChild(fill)
         
         })
+
+
     }
 
 }
+
+let projectDefault = document.createElement("div")
+projectDefault.innerText = defaultProject.name
+projectDefault.classList.add("project")
+projectDefault.addEventListener("click", () => {
+    updateRenderProjectTasks(projectDefault)
+})
+document.getElementById("projects-list").appendChild(projectDefault)
+currentProject = projectDefault
+
+console.log("currentProject",currentProject)
 
 
 
@@ -115,16 +125,30 @@ button.addEventListener("click", () => {
     task.classList.add("task")
     button.nextElementSibling.appendChild(task)
 
-    //Create data object with supplied data
+    console.log("check project status",document.getElementById("tasks-list").firstChild == undefined);
+
+    // Go through each project object until its first element name matches the one on the DOM
     toDoParent.allProjects.forEach( element => {
-        console.log("element",element)
-        if (button.nextElementSibling.firstChild.textContent == element.allItems[0].id) {
+        console.log("element",element.allItems)
+        console.log("currentProject",currentProject.textContent)
+        console.log("element.name",element.name)
+        if (element.name == currentProject.textContent) {
+
             //Insert data from object to element
-            console.log("element",element)
-            console.log(createToDoItem("Title","description of item","date","high priority","notes for todo item","checked item", element))
-            task.textContent = element.allItems[element.allItems.length - 1].id;
+            console.log("element",element.name)
+            // Create a task object and supply it with the corresponding project
+            let taskPlaceholder = createToDoItem("Title","description of item","date","high priority","notes for todo item","checked item", element)
+            //Insert data from object to element
+            console.log("taskPlaceholder",taskPlaceholder)
+            console.log("new proto",Object.getPrototypeOf(taskPlaceholder))
+            console.log("user proto",Object.getPrototypeOf(user))
+            task.textContent = taskPlaceholder.id;
         }
     })
+
+    if (document.getElementById("tasks-list").firstChild.textContent == currentProject[0]) {
+        alert("no project")
+        }
     
     // console.log(createToDoItem("Title","description of item","date","high priority","notes for todo item","checked item",))
     // //Insert data from object to element
@@ -141,20 +165,23 @@ addProject.addEventListener("click", () =>  {
     project.classList.add("project")
     addProject.nextElementSibling.appendChild(project)
 
-    console.log(createProject("Project"))
+    let projectHolder = createProject("Project")
     project.textContent = toDoParent.allProjects[toDoParent.allProjects.length - 1].name
     console.log(toDoParent.allProjects)
 
     project.addEventListener("click", () => {
-        updateRenderProjectTasks(project)
+        updateRenderProjectTasks(project, projectHolder)
     })
 
 })
+
 
 function updateRenderProjectTasks(projectNode) {
 
     console.log("entered renderProjectTasks ",projectNode.textContent)
 
+    // Set current working project
+    currentProject = projectNode;
 
     toDoParent.allProjects.forEach( element => {
         if(element.name === projectNode.textContent) {
@@ -173,6 +200,7 @@ function updateRenderProjectTasks(projectNode) {
                 console.log("Hello",element)
     
                 document.getElementById("tasks-list").appendChild(fill)
+
              })
         }
     })
