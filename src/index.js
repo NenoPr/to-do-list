@@ -21,9 +21,9 @@ function createProject(getName) {
     return project;
 }
 
-function createToDoItem(getTitle, getDescription, getDueDate, getPriority, getNotes, getChecklist) {
+function createToDoItem(getTitle, getDescription, getDueDate, getPriority, getNotes, getChecklist, project) {
 
-    let toDoChild = Object.create(defaultProject)
+    let toDoChild = Object.create(project)
 
     toDoChild.id = getTitle + Math.random(10)
     toDoChild.title = getTitle
@@ -46,14 +46,13 @@ function createToDoItem(getTitle, getDescription, getDueDate, getPriority, getNo
 console.log("-----------------------")
 
 const defaultProject = new createProject("Default_Project")  
-let user = createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item");
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item");
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item");
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item");
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item");
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item");
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item");
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item");
+let user = createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
+createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
+createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
+createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
+createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
+createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
+createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
 
 // console.log(Object.getPrototypeOf(user))
 // Object.setPrototypeOf(user, toDoParent);
@@ -117,10 +116,20 @@ button.addEventListener("click", () => {
     button.nextElementSibling.appendChild(task)
 
     //Create data object with supplied data
-    console.log(createToDoItem("Title","description of item","date","high priority","notes for todo item","checked item"))
-    //Insert data from object to element
-    task.textContent = defaultProject.allItems[defaultProject.allItems.length - 1].id;
-    console.log(defaultProject)
+    toDoParent.allProjects.forEach( element => {
+        console.log("element",element)
+        if (button.nextElementSibling.firstChild.textContent == element.allItems[0].id) {
+            //Insert data from object to element
+            console.log("element",element)
+            console.log(createToDoItem("Title","description of item","date","high priority","notes for todo item","checked item", element))
+            task.textContent = element.allItems[element.allItems.length - 1].id;
+        }
+    })
+    
+    // console.log(createToDoItem("Title","description of item","date","high priority","notes for todo item","checked item",))
+    // //Insert data from object to element
+    // task.textContent = defaultProject.allItems[defaultProject.allItems.length - 1].id;
+    // console.log(defaultProject)
 
 })
 
