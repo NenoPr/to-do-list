@@ -1,19 +1,21 @@
+import { startupRenderProjectTasks, startupLibrarySidebarRenderer, tasksInitialEventAdder, addNewProject, updateRenderProjectTasks, addTaskInterface} from './DOMManipulation'
+import { compareAsc, format } from 'date-fns'
 import './stylesheet.css'
 
 // Create the parent object logic for manipulating data from toDoChild child objects
 const toDoParent = {
     allProjects: [],
     summary:  function() {
-        console.log(this.title, this.description, this.dueDate, this.priority, this.notes, this.checklist)
-    }
-
+        console.log(this.title, this.description, this.dueDate, this.priority, this.notes, this.checked)
+    },
 }
 
 // Factory function to create a To Do item
 function createProject(getName) {
-
+    
     let project = Object.create(toDoParent)
 
+    project.title = getName
     project.name = getName + Math.random(10);
     project.allItems = [];
     toDoParent.allProjects.push(project)
@@ -21,17 +23,19 @@ function createProject(getName) {
     return project;
 }
 
-function createToDoItem(getTitle, getDescription, getDueDate, getPriority, getNotes, getChecklist, project) {
+// Create a To Do object
+function createToDoItem(getTitle, getDescription, getDueDate, getPriority, getNotes, getChecked, project) {
 
     let toDoChild = Object.create(project)
 
     toDoChild.id = getTitle + Math.random(10)
     toDoChild.title = getTitle
-    toDoChild.description = getDescription
-    toDoChild.dueDate = getDueDate
-    toDoChild.priority = getPriority
-    toDoChild.notes = getNotes
-    toDoChild.checklist = getChecklist
+    toDoChild.description = getDescription ? getDescription : ""
+    toDoChild.dueDate = getDueDate ? getDueDate : "No Due Date"
+    toDoChild.priority = getPriority ? getPriority : "Regular Priority"
+    toDoChild.notes = getNotes ? getNotes : "No Notes"
+    toDoChild.checked = "Unchecked"
+    toDoChild.dateValue = (Number(getDueDate.slice(0,2))) + ((Number(getDueDate.slice(3,5)) - 1) * 30) + Number(getDueDate.slice(6,10) * 365)
 
     project.allItems.push(toDoChild)
 
@@ -46,13 +50,18 @@ function createToDoItem(getTitle, getDescription, getDueDate, getPriority, getNo
 console.log("-----------------------")
 
 const defaultProject = new createProject("Default_Project")  
-let user = createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
-createToDoItem("Title of item","description of item","date","high priority","notes for todo item","checked item",defaultProject);
+
+//#region ---- Default_Project Task Object data insertion ----
+let user = createToDoItem("Solve the quantum paradigm","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","18.08.2022.","Urgent Priority","notes for todo item","Unchecked",defaultProject);
+createToDoItem("Pick up Money","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","17.07.2022.","Urgent Priority","notes for todo item","Unchecked",defaultProject);
+createToDoItem("Figure the Almond Principle","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","16.07.2022.","Low Priority","notes for todo item","Unchecked",defaultProject);
+createToDoItem("Compute the Pi figure number","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","13.09.2022.","Regular Priority","notes for todo item","Unchecked",defaultProject);
+createToDoItem("Continue the disillusion of the delusion","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","05.07.2022.","Urgent Priority","notes for todo item","Unchecked",defaultProject);
+createToDoItem("Solve the Quadratic Minpel's Equation","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","18.08.2022.","Low Priority","notes for todo item","Unchecked",defaultProject);
+createToDoItem("Smack that number key","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","06.07.2022.","Low Priority","notes for todo item","Unchecked",defaultProject);
+
+//#endregion
+
 
 console.log("user proto",Object.getPrototypeOf(user))
 
@@ -64,148 +73,16 @@ console.log("user proto",Object.getPrototypeOf(user))
 // console.log(Object.getOwnPropertyNames(toDoParent).filter(item => typeof toDoParent[item] === 'function'))
 
 user.summary()
-// console.log(user)
+console.log(user)
 console.log("defaultProject's items:",defaultProject.allItems)
 console.log("toDoParent's projects:",toDoParent.allProjects)
 
-// defaultProject.allItems.forEach(element => {
-
-//     let fill = document.createElement("div")
-//     fill.classList.add("task")
-
-//     fill.textContent = element.id
-    
-//     document.getElementById("tasks-list").appendChild(fill)
-
-// })
-
-let currentProject;
-
 startupRenderProjectTasks()
+startupLibrarySidebarRenderer()
+addTaskInterface()
+addNewProject()
 
-
-function startupRenderProjectTasks() {
-    if (document.getElementById("tasks-list").firstChild == undefined) {
-        
-        defaultProject.allItems.forEach(element => {
-
-            let fill = document.createElement("div")
-            fill.classList.add("task")
-        
-            fill.textContent = element.id
-            
-            document.getElementById("tasks-list").appendChild(fill)
-        
-        })
-
-
-    }
-
-}
-
-let projectDefault = document.createElement("div")
-projectDefault.innerText = defaultProject.name
-projectDefault.classList.add("project")
-projectDefault.addEventListener("click", () => {
-    updateRenderProjectTasks(projectDefault)
-})
-document.getElementById("projects-list").appendChild(projectDefault)
-currentProject = projectDefault
-
-console.log("currentProject",currentProject)
-
-
-
-// Add event listeners to populate DOM with tasks
-let button = document.getElementById("add-task")
-button.addEventListener("click", () => {
-
-    //Create element to append to DOM
-    let task = document.createElement("div")
-    task.classList.add("task")
-    button.nextElementSibling.appendChild(task)
-
-    console.log("check project status",document.getElementById("tasks-list").firstChild == undefined);
-
-    // Go through each project object until its first element name matches the one on the DOM
-    toDoParent.allProjects.forEach( element => {
-        console.log("element",element.allItems)
-        console.log("currentProject",currentProject.textContent)
-        console.log("element.name",element.name)
-        if (element.name == currentProject.textContent) {
-
-            //Insert data from object to element
-            console.log("element",element.name)
-            // Create a task object and supply it with the corresponding project
-            let taskPlaceholder = createToDoItem("Title","description of item","date","high priority","notes for todo item","checked item", element)
-            //Insert data from object to element
-            console.log("taskPlaceholder",taskPlaceholder)
-            console.log("new proto",Object.getPrototypeOf(taskPlaceholder))
-            console.log("user proto",Object.getPrototypeOf(user))
-            task.textContent = taskPlaceholder.id;
-        }
-    })
-
-    if (document.getElementById("tasks-list").firstChild.textContent == currentProject[0]) {
-        alert("no project")
-        }
-    
-    // console.log(createToDoItem("Title","description of item","date","high priority","notes for todo item","checked item",))
-    // //Insert data from object to element
-    // task.textContent = defaultProject.allItems[defaultProject.allItems.length - 1].id;
-    // console.log(defaultProject)
-
-})
-
-// Add event listeners to populate DOM with projects
-let addProject = document.getElementById("add-project")
-addProject.addEventListener("click", () =>  {
-
-    let project = document.createElement("div")
-    project.classList.add("project")
-    addProject.nextElementSibling.appendChild(project)
-
-    let projectHolder = createProject("Project")
-    project.textContent = toDoParent.allProjects[toDoParent.allProjects.length - 1].name
-    console.log(toDoParent.allProjects)
-
-    project.addEventListener("click", () => {
-        updateRenderProjectTasks(project, projectHolder)
-    })
-
-})
-
-
-function updateRenderProjectTasks(projectNode) {
-
-    console.log("entered renderProjectTasks ",projectNode.textContent)
-
-    // Set current working project
-    currentProject = projectNode;
-
-    toDoParent.allProjects.forEach( element => {
-        if(element.name === projectNode.textContent) {
-            
-            document.querySelectorAll(".task").forEach(element => {element.remove()})
-
-            // let projectHolder = document.getElementById("tasks-list")
-            console.log("entering forEach ",element)
-            element.allItems.forEach(element => {
-                console.log("entered forEach ",projectNode.textContent)
-
-                let fill = document.createElement("div")
-                fill.classList.add("task")
-
-                fill.textContent = element.id
-                console.log("Hello",element)
-    
-                document.getElementById("tasks-list").appendChild(fill)
-
-             })
-        }
-    })
-
-}
+export { toDoParent, createToDoItem, createProject, defaultProject, user }
 
 
 
