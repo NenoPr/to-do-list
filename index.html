@@ -12,7 +12,9 @@
     
     <div id="container">
         <div id="header">
-            <div> Logo Image </div>
+            <div>
+                <p id="header-text">Manage your To-Do's</p>
+            </div>
         </div>
         <div id="sidebar">
             <div id="sidebar-contents">
@@ -30,11 +32,15 @@
         </div>
         <div id="content">
             <div id="add-task"> + Add task</div>
-            <div id="sort-by">Sort By ˇ</div>
+            <div id="current-view-port"></div>
+            <div id="sort-by">
+                <p id="sort-by-text">Sort By</p>
                 <div id="dropdown">
-                    <div class="order-by-options" id="sort-name">Name</div>
-                    <div class="order-by-options" id="sort-priority">Priority</div>
-                    <div class="order-by-options farther-to-closer" id="sort-date">Due Date: Ascending</div>
+                    <div class="order-by-options checked-last" id="sort-check">Check</div>
+                    <div class="order-by-options low-to-high" id="sort-priority">Priority</div>
+                    <div class="order-by-options farther-to-closer" id="sort-date">Due Date</div>
+                    <div class="order-by-options last-created-first" id="sort-creation-date">Creation Date</div>
+                </div>
             </div>
             <div id="tasks-list"></div>
         </div>
