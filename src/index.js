@@ -76,17 +76,28 @@ if (storageAvailable('localStorage')) {
     // Yippee! We can use localStorage awesomeness
 
     console.log(localStorage)
-    for (let i=0;i<localStorage.length;i++) {
+    if (localStorage.length != 0) {
+        // try {
+            for (let i=0;i<localStorage.length;i++) {
 
-            let projectToLoad = JSON.parse(localStorage.getItem(localStorage.key(i)))
-            console.log(JSON.parse(localStorage.getItem(localStorage.key(i))))
-            Object.setPrototypeOf(projectToLoad, toDoParent)
-            console.log(projectToLoad)
-            toDoParent.allProjects.push(projectToLoad)
-            projectToLoad.allItems.forEach(element => {
-                Object.setPrototypeOf(element, projectToLoad)
-            });
+                try {
+                    let projectToLoad = JSON.parse(localStorage.getItem(localStorage.key(i)))
+                console.log(JSON.parse(localStorage.getItem(localStorage.key(i))))
+                Object.setPrototypeOf(projectToLoad, toDoParent)
+                console.log(projectToLoad)
+                toDoParent.allProjects.push(projectToLoad)
+                projectToLoad.allItems.forEach(element => {
+                    Object.setPrototypeOf(element, projectToLoad)
+                });
+                }
+                catch (err) { }
+            }
     }
+        // catch {
+        //     alert("Can not access local Storage. All data will be lost on page refresh or close.")
+        // }
+
+        // finally {}
   }
   else {
     // Too bad, no localStorage for us

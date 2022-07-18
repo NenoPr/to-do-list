@@ -532,7 +532,7 @@ function toggleCheckTask(pointer) {
             }
             console.log(item.id)
         })
-        console.log("element.name",element.name)
+        // console.log("element.name",element.name)
     })
 
 } 
@@ -580,6 +580,13 @@ function submitNewTask(form) {
         spanInfo.textContent = "*Please input a title"
         taskLabelTitle.appendChild(spanInfo)
         return
+    } else if (form.elements[2].value == "") {
+        let taskLabelTitle = document.getElementById("label-task-title-input")
+        let spanInfo = document.createElement("span")
+        spanInfo.id = "span-error-task-title-input"
+        spanInfo.textContent = "*Please Create a Project First"
+        taskLabelTitle.appendChild(spanInfo)
+
     }
     console.log("form.elements",form.elements)
 
@@ -748,7 +755,12 @@ function startupRenderProjectTasks() {
             
             })
         }
-        document.getElementById("current-view-port").textContent = toDoParent.allProjects[0].title
+        try {
+            if (toDoParent.allProjects[0].title != undefined) {
+                document.getElementById("current-view-port").textContent = toDoParent.allProjects[0].title
+            }
+        }
+        catch {}
     }
 }
 
@@ -953,6 +965,8 @@ function createNewProject() {
         project.addEventListener("click", () => {
             updateRenderProjectTasks(project)
         })
+
+        updateRenderProjectTasks(project)
 
         window.localStorage.setItem(projectHolder.name, JSON.stringify(projectHolder))
 
