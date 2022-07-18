@@ -76,52 +76,46 @@ if (storageAvailable('localStorage')) {
     // Yippee! We can use localStorage awesomeness
 
     console.log(localStorage)
-    if (localStorage.length != 0) {
-        // try {
-            if (window.localStorage.length < 1) {
-                window.localStorage.clear()
-                const toDoListProject = new createProject("To Do List Project")
-                const testProject = new createProject("Test Project")  
 
-                createToDoItem("Complete The To Do List","Do it.","16.07.2022.","Urgent Priority","notes for todo item","Checked",toDoListProject);
-                createToDoItem("Solve the quantum paradigm","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","18.08.2022.","Urgent Priority","notes for todo item","Unchecked",toDoListProject);
-                createToDoItem("Pick up Money","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","17.07.2022.","Urgent Priority","notes for todo item","Unchecked",toDoListProject);
-                createToDoItem("Figure the Almond Principle","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","16.07.2022.","Low Priority","notes for todo item","Unchecked",toDoListProject);
-                createToDoItem("Compute the Pi figure number","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","13.09.2022.","Regular Priority","notes for todo item","Unchecked",toDoListProject);
-                createToDoItem("Continue the disillusion of the delusion","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","05.07.2022.","Urgent Priority","notes for todo item","Unchecked",toDoListProject);
-                createToDoItem("Solve the Quadratic Minpel's Equation","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","18.08.2022.","Low Priority","notes for todo item","Unchecked",toDoListProject);
-                createToDoItem("Smack that number key","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","12.07.2022.","Low Priority","notes for todo item","Unchecked",toDoListProject);
-                createToDoItem("Solve the Quadratic Minpel's Equation","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","18.08.2022.","Low Priority","notes for todo item","Unchecked",testProject);
-                createToDoItem("Smack that number key","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","12.07.2022.","Low Priority","notes for todo item","Unchecked",testProject);
-                
-            }
-            else {
-                for (let i=0;i<window.localStorage.length;i++) {
+        console.log("window.localStorage.length",window.localStorage.length)
+        if (window.localStorage.length == 0) {
+            window.localStorage.clear()
+            const toDoListProject = new createProject("To Do List Project")
+            const testProject = new createProject("Test Project")  
 
-                    try {
-                        let projectToLoad = JSON.parse(window.localStorage.getItem(window.localStorage.key(i)))
-                    console.log(JSON.parse(window.localStorage.getItem(window.localStorage.key(i))))
-                    Object.setPrototypeOf(projectToLoad, toDoParent)
-                    console.log(projectToLoad)
-                    toDoParent.allProjects.push(projectToLoad)
-                    projectToLoad.allItems.forEach(element => {
-                        Object.setPrototypeOf(element, projectToLoad)
-                    });
-                    }
-                    catch (err) { }
+            createToDoItem("Complete The To Do List","Do it.","16.07.2022.","Urgent Priority","notes for todo item","Checked",toDoListProject);
+            createToDoItem("Solve the quantum paradigm","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","18.08.2022.","Urgent Priority","notes for todo item","Unchecked",toDoListProject);
+            createToDoItem("Pick up Money","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","17.07.2022.","Urgent Priority","notes for todo item","Unchecked",toDoListProject);
+            createToDoItem("Figure the Almond Principle","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","16.07.2022.","Low Priority","notes for todo item","Unchecked",toDoListProject);
+            createToDoItem("Compute the Pi figure number","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","13.09.2022.","Regular Priority","notes for todo item","Unchecked",toDoListProject);
+            createToDoItem("Continue the disillusion of the delusion","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","05.07.2022.","Urgent Priority","notes for todo item","Unchecked",toDoListProject);
+            createToDoItem("Solve the Quadratic Minpel's Equation","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","18.08.2022.","Low Priority","notes for todo item","Unchecked",toDoListProject);
+            createToDoItem("Smack that number key","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","12.07.2022.","Low Priority","notes for todo item","Unchecked",toDoListProject);
+            createToDoItem("Solve the Quadratic Minpel's Equation","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","18.08.2022.","Low Priority","notes for todo item","Unchecked",testProject);
+            createToDoItem("Smack that number key","Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis obcaecati consequuntur distinctio, fugiat ad magnam, ex optio ducimus officia minus reprehenderit quaerat! Eos, dolorum esse!","12.07.2022.","Low Priority","notes for todo item","Unchecked",testProject);
+
+        }
+        else {
+            for (let i=0;i<window.localStorage.length;i++) {
+
+                try {
+                    let projectToLoad = JSON.parse(window.localStorage.getItem(window.localStorage.key(i)))
+                console.log(JSON.parse(window.localStorage.getItem(window.localStorage.key(i))))
+                Object.setPrototypeOf(projectToLoad, toDoParent)
+                console.log(projectToLoad)
+                toDoParent.allProjects.push(projectToLoad)
+                projectToLoad.allItems.forEach(element => {
+                    Object.setPrototypeOf(element, projectToLoad)
+                });
                 }
+                catch (err) { }
             }
+        }
     }
-        // catch {
-        //     alert("Can not access local Storage. All data will be lost on page refresh or close.")
-        // }
-
-        // finally {}
-  }
-  else {
+    else {
     // Too bad, no localStorage for us
     alert("Can not access local Storage. All data will be lost on page refresh or close.")
-  }
+    }
 
 console.log("-----------------------")
 

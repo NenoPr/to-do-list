@@ -13,3 +13,5 @@ Fixed an error with localStorage not loading at unexpected characters. Fixed a n
 Added Page title and a favicon Icon
 Added placeholder projects and tasks
 Committing this commit on README.md
+
+Commit 9: Kids! Always remember to double check your code!
