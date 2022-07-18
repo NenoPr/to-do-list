@@ -1500,10 +1500,11 @@ function sortByDate(event) {
     document.querySelectorAll(".example-task-wrapper").forEach(element => {element.remove()})
 
     itemList.forEach( item => {
-        toDoParent.allProjects.forEach( element => {
-            element.allItems.forEach(element => {
-                if (element.id == item) {
-                    orderedDates.push([element.dateValue, element.id])
+        toDoParent.allProjects.forEach( project => {
+            console.log("project",project)
+            project.allItems.forEach( task => {
+                if (task.id == item) {
+                    orderedDates.push([task.dateValue, task.id])
                     // console.log("element.dueDate:",element.id)
                     // console.log("element.dateValue:",element.dateValue)
                 }
