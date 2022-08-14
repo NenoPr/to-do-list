@@ -1,6 +1,8 @@
 # to-do-list-TheOdinProject
 To Do List for The Odin Project
 
+Site Link: https://nenopr.github.io/to-do-list-TheOdinProject/
+
 Commit 1: Finished creating objects and their relations, added logic for creating new tasks and projects on the DOM and connected them for writing and recalling them with the data the objects
 
 Commit 2: Redesigned the to do task into a column list, clicking it expands description. Added multiple project support and its creation logic and interface. Added new task creation logic and interface design.Added date input to task with the current day based on the date from the date-fn module. Added Priority.Added ability to edit,check and delete a task.Editing prompts a window with all of the tasks info already inputted and ready to be changed.Added basic sidebar logic based on its implied action still a work in progress. Added the ability to sort by priority and date, ascending and descending. Some more design changes and that's mostly all I can add
